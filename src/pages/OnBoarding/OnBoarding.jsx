@@ -1,3 +1,5 @@
+
+
 const OnBoarding = () => {
   return (
     <div className="onboarding">

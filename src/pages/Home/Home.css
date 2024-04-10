@@ -1,0 +1,24 @@
+.primary-button{
+    color:#fff;
+    text-transform: uppercase;
+    font-size: 15px;
+    background: linear-gradient(45deg,rgb(254,48,114), rgb(255,89,64));
+    padding: 12px 30px;
+    border-radius: 30px;
+    border: none;
+}
+
+.primary-button:hover{
+    background: linear-gradient(260deg,rgb(254,48,114), rgb(255,89,64));
+}
+
+.overlay{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background :linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.65) 0%,
+        rgba(0,0,0,0) 100%
+    )
+}
