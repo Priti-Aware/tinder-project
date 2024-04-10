@@ -1,7 +1,7 @@
 import './App.css'
-import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
-import OnBoarding from './pages/OnBoarding';
+import Home from './pages/Home/Home';
+import Dashboard from './pages/Dashboard/Dashboard';
+import OnBoarding from './pages/OnBoarding/OnBoarding';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
 
