@@ -1,23 +1,38 @@
 import "./Home.css";
 import Navbar from "../../components/Navbar/Navbar";
+import { useState } from "react";
+import AuthModal from "../../components/AuthModal/AuthModal";
 
 const Home = () => {
+    const [showModal, setShowModal] = useState(false);
+    const [isSignUp, setIsSignUp] = useState(true);
+
 
   const authToken = false;
   const handleClick = () => {
     console.log("Clicked");
+    setShowModal(true)
+    setIsSignUp(true)
   }
   return (
     <div className="overlay">
-    <Navbar minimal={false} authToken={authToken}/>
-    <div className="home">
-      <h1>Swipe Right</h1>
-      <button className="primary-button" onClick={handleClick}>
-        {authToken ? 'Signout' : 'Create Account'}
-      </button>
+        <Navbar
+            authToken={authToken}
+            minimal={false}
+            setShowModal={setShowModal}
+            showModal={showModal}
+            setIsSignUp={setIsSignUp}
+        />
+        <div className="home">
+            <h1 className="primary-title">Swipe Right®</h1>
+            <button className="primary-button" onClick={handleClick}>
+                {authToken ? 'Signout' : 'Create Account'}
+            </button>
+            {showModal && (
+                <AuthModal setShowModal={setShowModal} isSignUp={isSignUp}/>
+            )}
+        </div>
     </div>
-    </div>
-  )
+)
 }
-
 export default Home

@@ -1,4 +1,4 @@
-
+import "./OnBoarding.css";
 
 const OnBoarding = () => {
   return (
