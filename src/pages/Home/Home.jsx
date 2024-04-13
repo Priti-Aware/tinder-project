@@ -17,7 +17,6 @@ const Home = () => {
   return (
     <div className="overlay">
         <Navbar
-            authToken={authToken}
             minimal={false}
             setShowModal={setShowModal}
             showModal={showModal}
