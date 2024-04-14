@@ -1,4 +1,3 @@
-import React from 'react';
 import './ChatContainer.css'
 import ChatHeader from './ChatHeader';
 import MatchesDisplay from './MatchesDisplay';
