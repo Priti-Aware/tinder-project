@@ -3,13 +3,13 @@
     background-color: rgb(255,255,255);
     box-shadow: rgba(0,0,0,0.05) 0px 6px 24px 0px,
     rgba(0,0,0,0.08) 0px 0px 0px 1px;
-    width: 30%;
+    width: 29%;
     text-align: left;
     z-index: 1;
 }
 
 .chat-container .chat-container-header{
-    background: linear-gradient(45deg, rgb(254,48,114), rgb(255,89,64));
+    background: linear-gradient(45deg, rgb(0, 0, 0), rgb(79, 76, 76));
     height: 100px;
     display: flex;
     justify-content: space-between;
@@ -20,7 +20,7 @@
     padding-left: 20px;
     border: none;
     background-color: rgb(255,255,255);
-    border-bottom: solid 4px rgb(243,33,33);
+    border-bottom: solid 4px rgb(0, 0, 0);
     font-size: 20px;
     margin: 2px;
     padding: 10px;
