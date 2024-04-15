@@ -19,13 +19,29 @@
 }
 
 .onboarding form input {
-  padding: 15px 30px;
-  margin: 10px 0;
-  font-size: 15px;
+  padding: 1vw 2vw;
+  margin: 1vh 0;
+  font-size: 1vw;
   border: solid 2px rgb(219, 219, 219);
   border-radius: 10px;
 }
 
+
+.onboarding form .drop_down{
+  padding: 1vw 2vw;
+  margin: 1vh 0;
+  font-size: 1vw;
+  border: solid 2px rgb(219, 219, 219);
+  border-radius: 10px;
+}
+
+.onboarding form textarea{
+  padding: 1vw 2vw;
+  margin: 1vh 0;
+  font-size: 1vw;
+  border: solid 2px rgb(219, 219, 219);
+  border-radius: 10px;
+}
 .onboarding form input::-webkit-outer-spin-button,
 .onboarding form input::-webkit-inner-spin-button {
   -webki-appearance: none;
@@ -33,6 +49,10 @@
 }
 
 .onboarding form label {
+  margin: 10px 0;
+}
+
+.onboarding form textarea {
   margin: 10px 0;
 }
 
@@ -78,6 +98,10 @@
   .onboarding form {
     font-size: 3vw;
   }
+
+  .onboarding h2 {
+    font-size: 5vw;
+  }
   .onboarding form section {
     display: flex;
     flex-direction: column;
@@ -91,6 +115,14 @@
     font-size: 3vw;
     border: solid 2px rgb(219, 219, 219);
     border-radius: 10px;
+  }
+
+  .onboarding form .drop_down{
+    font-size: 3vw;
+  }
+  
+  .onboarding form textarea{
+    font-size: 3vw;
   }
 
   .onboarding form label {

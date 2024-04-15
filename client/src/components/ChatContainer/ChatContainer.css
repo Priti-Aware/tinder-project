@@ -6,6 +6,7 @@
     width: 29%;
     text-align: left;
     z-index: 1;
+    height: 100vh;
 }
 
 .chat-container .chat-container-header{
@@ -69,3 +70,10 @@
     display: flex;
     flex-direction: column;
 }
+
+@media only screen and (max-width: 600px) {
+    .chat-container{
+        width: 90%;
+        height: 96vh;
+    }
+}  

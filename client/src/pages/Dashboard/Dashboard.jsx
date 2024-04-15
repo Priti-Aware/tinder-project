@@ -38,7 +38,6 @@ const Dashboard = () => {
   }
   return (
     <div className="dashboard"> 
-      <ChatContainer/>
         <div className="swipe-container">
            <div className="card-container">
            {characters.map((character) =>
@@ -54,7 +53,7 @@ const Dashboard = () => {
           {lastDirection? <p>You Swiped {lastDirection}</p>:<p/>}
         </div>
         </div>
-        
+        <ChatContainer/>
     </div>
   )
 }
