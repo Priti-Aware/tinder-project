@@ -144,6 +144,7 @@ const OnBoarding = () => {
             </div>
             <label htmlFor="class">Class</label>
             <select className="drop_down">
+              <option value="none">Select</option>
               <option value="fe">First Year (FE)</option>
               <option value="te">Third Year (TE)</option>
               <option value="be">Final Year (BE)</option>
@@ -151,6 +152,7 @@ const OnBoarding = () => {
 
             <label htmlFor="looking_for">Looking For</label>
             <select className="drop_down">
+            <option value="none">Select</option>
               <option value="fe">Project Partners</option>
               <option value="te">Mentorship</option>
               <option value="be">Networking</option>
