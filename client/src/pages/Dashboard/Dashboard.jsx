@@ -2,6 +2,8 @@ import { useState } from 'react'
 import TinderCard from 'react-tinder-card'
 import ChatContainer from "../../components/ChatContainer/ChatContainer"
 import "./Dashboard.css"
+import axios from 'axios'
+
 const characters = [
   {
     name: 'Monica Hall',
@@ -27,6 +29,18 @@ const characters = [
 
 const Dashboard = () => {
   const [lastDirection, setLastDirection] = useState()
+  const [user, setUser] = useState(null)
+
+  const getUser = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/user', {
+        params: { userId }
+      })
+      setUser(response.data)
+    } catch (error) {
+      console.error("Error fetching user:", error)
+    }
+  }
 
   const swiped = (direction, nameToDelete) => {
     console.log('removing: ' + nameToDelete)
@@ -36,24 +50,24 @@ const Dashboard = () => {
   const outOfFrame = (name) => {
     console.log(name + ' left the screen!')
   }
+
   return (
     <div className="dashboard"> 
-        <div className="swipe-container">
-           <div className="card-container">
-           {characters.map((character) =>
-          <TinderCard className='swipe' key={character.name} onSwipe={(dir) => swiped(dir, character.name)} onCardLeftScreen={() => outOfFrame(character.name)}>
-            <div style={{ backgroundImage: 'url(' + character.url + ')' }} className='card'>
-              <h3>{character.name}</h3>
-            </div>
-          </TinderCard>
-        )}
-        
-           </div> 
-           <div className="swipe-info">
-          {lastDirection? <p>You Swiped {lastDirection}</p>:<p/>}
+      <div className="swipe-container">
+        <div className="card-container">
+          {characters.map((character) =>
+            <TinderCard className='swipe' key={character.name} onSwipe={(dir) => swiped(dir, character.name)} onCardLeftScreen={() => outOfFrame(character.name)}>
+              <div style={{ backgroundImage: 'url(' + character.url + ')' }} className='card'>
+                <h3>{character.name}</h3>
+              </div>
+            </TinderCard>
+          )}
+        </div> 
+        <div className="swipe-info">
+          {lastDirection ? <p>You Swiped {lastDirection}</p> : <p/>}
         </div>
-        </div>
-        <ChatContainer/>
+      </div>
+      <ChatContainer/>
     </div>
   )
 }

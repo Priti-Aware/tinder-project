@@ -1,26 +1,41 @@
 import { useState } from "react";
 import "./OnBoarding.css";
 import Navbar from "../../components/Navbar/Navbar";
+import { useCookies } from 'react-cookie'
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const OnBoarding = () => {
+  const [ cookies, setCookie, removeCookie] = useCookies('[user]')
   const [formData, setFormData] = useState({
-    user_id: "",
+    user_id: cookies.UserId,
     first_name: "",
     dob_day: "",
     dob_month: "",
     dob_year: "",
     show_gender: "false",
     gender_identity: "man",
-    gender_interest: "woman",
-    email: "",
     url: "",
-    social_url:"",
+    social_url:"https://githhub.com",
     pre_projects: "",
+    class:"",
+    look_for:"Mentor",
     about: "",
-    matches: [],
+    matches: []
   });
-  const handleSubmit = () => {
-    console.log("Submited");
+
+  let navigate=useNavigate();
+
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+    try{
+     const response=await axios.put('http://localhost:8000/user',{formData})
+     const success=response.statusCode===200
+     if(success) navigate('./dashboard')
+    }
+  catch (err){
+   console.log(err)
+  }
   };
   const handleChange = (e) => {
     const value =
@@ -59,16 +74,6 @@ const OnBoarding = () => {
               placeholder="Email"
               required={true}
               value={formData.email}
-              onChange={handleChange}
-            />
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              name="password"
-              placeholder="password"
-              required={true}
-              value={formData.password}
               onChange={handleChange}
             />
             <label>Birthday</label>
@@ -143,7 +148,7 @@ const OnBoarding = () => {
               />
             </div>
             <label htmlFor="class">Class</label>
-            <select className="drop_down">
+            <select className="drop_down class">
               <option value="none">Select</option>
               <option value="fe">First Year (FE)</option>
               <option value="te">Third Year (TE)</option>
@@ -151,7 +156,7 @@ const OnBoarding = () => {
             </select>
 
             <label htmlFor="looking_for">Looking For</label>
-            <select className="drop_down">
+            <select className="drop_down look_for">
             <option value="none">Select</option>
               <option value="fe">Project Partners</option>
               <option value="te">Mentorship</option>
@@ -174,10 +179,7 @@ const OnBoarding = () => {
               value={formData.pre_projects}
             />
 
-            <input type="submit" />
-          </section>
-          <section>
-          <label htmlFor="social_media"> Social media links</label>
+<label htmlFor="social_media"> Social media links</label>
             <input
               type="social_url"
               name="social_url"
@@ -185,6 +187,9 @@ const OnBoarding = () => {
               onChange={open}
               required={true}
             />
+          </section>
+          <section>
+          
             <label htmlFor="about">About me</label>
             <textarea rows="6" cols="8"
               id="about"
@@ -204,8 +209,9 @@ const OnBoarding = () => {
               required={true}
             />
             <div className="photo-container">
-              <img src={formData.url} alt="Profile Pic Preview" />
+              {formData.url && <img src={formData.url} alt="Profile Pic Preview" />}
             </div>
+            <input type="submit" />
           </section>
         </form>
       </div>
