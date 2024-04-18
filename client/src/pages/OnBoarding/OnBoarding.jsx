@@ -1,12 +1,12 @@
 import { useState } from "react";
 import "./OnBoarding.css";
 import Navbar from "../../components/Navbar/Navbar";
-import { useCookies } from 'react-cookie'
+import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const OnBoarding = () => {
-  const [ cookies, setCookie, removeCookie] = useCookies('[user]')
+  const [cookies, setCookie, removeCookie] = useCookies("[user]");
   const [formData, setFormData] = useState({
     user_id: cookies.UserId,
     first_name: "",
@@ -16,26 +16,27 @@ const OnBoarding = () => {
     show_gender: "false",
     gender_identity: "man",
     url: "",
-    social_url:"https://githhub.com",
-    pre_projects: "",
-    class:"",
-    look_for:"Mentor",
+    git_url: " ",
+    linkedin_url: " ",
+    class: "",
+    look_for: " ",
     about: "",
-    matches: []
+    matches: [],
   });
 
-  let navigate=useNavigate();
+  let navigate = useNavigate();
 
-  const handleSubmit = async(e) => {
-    e.preventDefault()
-    try{
-     const response=await axios.put('http://localhost:8000/user',{formData})
-     const success=response.statusCode===200
-     if(success) navigate('./dashboard')
+  const handleSubmit = async (e) => {
+    console.log("Submitted");
+    e.preventDefault();
+    try {
+      const response = await axios.put("http://localhost:8000/user", formData);
+      const success = response.status === 200;
+      //  console.log(response)
+      if (success) navigate("/dashboard");
+    } catch (err) {
+      console.log(err);
     }
-  catch (err){
-   console.log(err)
-  }
   };
   const handleChange = (e) => {
     const value =
@@ -151,24 +152,23 @@ const OnBoarding = () => {
             <select className="drop_down class">
               <option value="none">Select</option>
               <option value="fe">First Year (FE)</option>
+              <option value="se">Second Year (SE)</option>
               <option value="te">Third Year (TE)</option>
               <option value="be">Final Year (BE)</option>
             </select>
 
             <label htmlFor="looking_for">Looking For</label>
             <select className="drop_down look_for">
-            <option value="none">Select</option>
+              <option value="none">Select</option>
               <option value="fe">Project Partners</option>
-              <option value="te">Mentorship</option>
               <option value="be">Networking</option>
               <option value="be">Hackathon Teammates</option>
-              <option value="be">Event Collaboratorsg</option>
+              <option value="be">Event Collaboration</option>
               <option value="be">Leadership Opportunities </option>
               <option value="be">Volunteer Opportunities </option>
             </select>
 
-            
-            <label htmlFor="pre_projects">Previous Projects</label>
+            {/* <label htmlFor="pre_projects">Previous Projects</label>
             <input
               id="pre_projects"
               type="text"
@@ -177,21 +177,30 @@ const OnBoarding = () => {
               placeholder="Language Learning Platform."
               onChange={handleChange}
               value={formData.pre_projects}
-            />
+            /> */}
 
-<label htmlFor="social_media"> Social media links</label>
+            <label htmlFor="social_media">GitHub link</label>
             <input
-              type="social_url"
-              name="social_url"
-              id="social_url"
+              type="git_url"
+              name="git_url"
+              id="git_url"
+              onChange={open}
+              required={true}
+            />
+            <label htmlFor="social_media">LinkedIn link</label>
+            <input
+              type="linkedin_url"
+              name="linkedin_url"
+              id="linkedin_url"
               onChange={open}
               required={true}
             />
           </section>
           <section>
-          
             <label htmlFor="about">About me</label>
-            <textarea rows="6" cols="8"
+            <textarea
+              rows="6"
+              cols="8"
               id="about"
               type="text"
               name="about"
@@ -209,7 +218,9 @@ const OnBoarding = () => {
               required={true}
             />
             <div className="photo-container">
-              {formData.url && <img src={formData.url} alt="Profile Pic Preview" />}
+              {formData.url && (
+                <img src={formData.url} alt="Profile Pic Preview" />
+              )}
             </div>
             <input type="submit" />
           </section>

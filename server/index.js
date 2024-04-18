@@ -2,50 +2,50 @@ const express = require("express");
 const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
-const bcrypt = require('bcrypt');
-const cors = require('cors')
+const bcrypt = require("bcrypt");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 const PORT = process.env.PORT || 8000;
 const uri = process.env.MONGODB_URI;
 app.get("/", (req, res) => {
   res.json("Hello");
 });
 
-
 app.post("/login", async (req, res) => {
-    const client = new MongoClient(uri)
-    const {email, password} = req.body
+  const client = new MongoClient(uri);
+  const { email, password } = req.body;
 
-    try {
-        await client.connect()
-        const database = client.db("tinder-app-data");
-        const users = database.collection("users");
-        const user = await users.findOne({email})
+  try {
+    await client.connect();
+    const database = client.db("tinder-app-data");
+    const users = database.collection("users");
+    const user = await users.findOne({ email });
 
-        if (!user) {
-            // If no user found, return an error
-            return res.status(400).json('Invalid Credentials');
-        }
+    if (!user) {
+      // If no user found, return an error
+      return res.status(400).json("Invalid Credentials");
+    }
 
-        const correctPassword = await bcrypt.compare(password, user.hashed_password)
+    const correctPassword = await bcrypt.compare(
+      password,
+      user.hashed_password
+    );
 
-        if (user && correctPassword) {
-            const token = jwt.sign(user, email, {
-                expiresIn: 60 * 24
-            })
-            res.status(201).json({token,userId:user.user_id})
-        }
-        res.status(400).json('Invalid Credentials')
-    } catch (err) {
-        console.log(err)
-    } 
-})
-
-
+    if (user && correctPassword) {
+      const token = jwt.sign(user, email, {
+        expiresIn: 60 * 24,
+      });
+      res.status(201).json({ token, userId: user.user_id });
+    }
+    res.status(400).json("Invalid Credentials");
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 app.post("/signup", async (req, res) => {
   const client = new MongoClient(uri);
@@ -73,7 +73,7 @@ app.post("/signup", async (req, res) => {
     const token = jwt.sign(insertedUser, sanitizedEmail, {
       expiresIn: 60 * 24,
     });
-    res.status(201).json({ token,userId:generatedUserId});
+    res.status(201).json({ token, userId: generatedUserId });
   } catch (err) {
     console.log(err);
   } finally {
@@ -81,22 +81,24 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.get('/user',async(req,res)=>{
-  const client=new MongoClient(uri)
-  const userId=req.params.userId
+app.get("/user", async (req, res) => {
+  const client = new MongoClient(uri);
+  const userId = req.query.userId;
 
-  try{
+  console.log("userId", userId);
+
+  try {
+    await client.connect();
     const database = client.db("tinder-app-data");
     const users = database.collection("users");
 
-    const query={user_id:userId}
-    const user=await users.findOne(query)
-    res.send(user)
-  }
-  finally{
+    const query = { user_id: userId };
+    const user = await users.findOne(query);
+    res.send(user);
+  } finally {
     await client.close();
   }
-})
+});
 
 app.get("/users", async (req, res) => {
   const client = new MongoClient(uri);
@@ -114,42 +116,37 @@ app.get("/users", async (req, res) => {
   }
 });
 
-app.put('/user',async(req,res)=>{
-  const client=new MongoClient(uri);
-  const formData=req.body.formData;
+app.put("/user", async (req, res) => {
+  const client = new MongoClient(uri);
+  const formData = req.body;
 
-  console.log(formData);
-  try{
+  try {
     await client.connect();
     const database = client.db("tinder-app-data");
     const users = database.collection("users");
-    const query={user_id:formData.user_id};
-    const updateDocument={
-      $set:{
-        first_name:formData.first_name,
-        dob_day:formData.dob_day,
-        dob_month:formData.dob.dob_month,
-        dob_year:formData.dob_year,
-        show_gender:formData.show_gender,
-        gender_identity:formData.gender_identify,
-        url:formData.url,
-        about:formData.about,
-        matches:formData.matches,
-        social_url:formData.social_url,
-        prev_projects:formData.prev_projects,
-        class:formData.class,
-        look_for:formData.look_for
+    const query = { user_id: formData.user_id };
+    const updateDocument = {
+      $set: {
+        first_name: formData.first_name,
+        dob_day: formData.dob_day,
+        dob_month: formData.dob_month, // Fix the typo here
+        dob_year: formData.dob_year,
+        show_gender: formData.show_gender,
+        gender_identity: formData.gender_identity,
+        url: formData.url,
+        about: formData.about,
+        matches: formData.matches,
+        git_url: formData.git_url,
+        linkedin_url: formData.linkedin_url,
+        class: formData.class,
+        look_for: formData.look_for,
       },
-    }
-    const insertedUser=await users.updateOne(query,updateDocument)
-    res.json(insertedUser)
+    };
+    const updatedUser = await users.updateOne(query, updateDocument);
+    res.send(updatedUser);
+  } finally {
+    await client.close();
   }
-  finally{
-    await client.close()
-  }
-})
-
-
-
+});
 
 app.listen(PORT, () => console.log("Server running on PORT " + PORT));
