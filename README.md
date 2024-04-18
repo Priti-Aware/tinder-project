@@ -1,7 +1,7 @@
 # Tinder Project README
 
 ## Description:
-Welcome to the Tinder Project! This project aims to replicate some functionalities of the popular dating app Tinder. It provides a platform for users to create profiles, match with others, and engage in conversations.
+Welcome to the 'Swipe' Project! This project aims to replicate some functionalities of the popular dating app Tinder. It provides a platform for users to create profiles, match with others, and engage in conversations.
 
 ## Installation:
 To clone the project, run the following command in your terminal:
