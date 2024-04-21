@@ -149,7 +149,13 @@ const OnBoarding = () => {
               />
             </div>
             <label htmlFor="class">Class</label>
-            <select className="drop_down class">
+            <select
+              id="class"
+              className="drop_down class"
+              name="class" // Ensure the name attribute matches the corresponding field in the formData state
+              value={formData.class} // Ensure the value of the dropdown is controlled by the state
+              onChange={handleChange} // Ensure handleChange function is called on change
+            >
               <option value="none">Select</option>
               <option value="fe">First Year (FE)</option>
               <option value="se">Second Year (SE)</option>
@@ -158,14 +164,24 @@ const OnBoarding = () => {
             </select>
 
             <label htmlFor="looking_for">Looking For</label>
-            <select className="drop_down look_for">
+            <select
+              id="looking_for"
+              className="drop_down look_for"
+              name="look_for" // Ensure the name attribute matches the corresponding field in the formData state
+              value={formData.look_for} // Ensure the value of the dropdown is controlled by the state
+              onChange={handleChange} // Ensure handleChange function is called on change
+            >
               <option value="none">Select</option>
-              <option value="fe">Project Partners</option>
-              <option value="be">Networking</option>
-              <option value="be">Hackathon Teammates</option>
-              <option value="be">Event Collaboration</option>
-              <option value="be">Leadership Opportunities </option>
-              <option value="be">Volunteer Opportunities </option>
+              <option value="project_partners">Project Partners</option>
+              <option value="networking">Networking</option>
+              <option value="hackathon_teammates">Hackathon Teammates</option>
+              <option value="event_collaboration">Event Collaboration</option>
+              <option value="leadership_opportunities">
+                Leadership Opportunities
+              </option>
+              <option value="volunteer_opportunities">
+                Volunteer Opportunities
+              </option>
             </select>
 
             {/* <label htmlFor="pre_projects">Previous Projects</label>
